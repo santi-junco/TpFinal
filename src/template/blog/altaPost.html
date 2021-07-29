@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'js/confirmacion.js'%}"></script>
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url(/static/img/contact-bg.jpg)">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>Bienvenidos</h1>
+                    <span class="subheading">Blog de Noticias y Actualidad</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<br>
+<div class=" jumbotron jumbotron-fluid">
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">
+                <!--{% crispy form %}-->
+                {% csrf_token %}
+                <!-- <div class="container" style="width: 750px">
+        <div class="row">-->
+                {{form|crispy}}
+            </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-outline-info"> Guardar</button>
+                    <!-- <input type="submit" name="guardar" id="" value="Guardar" class="btn btn-outline-info"  onclick="confirmarEliminacion({{post.id}})" > -->
+                </div>
+                <!-- </div>
+    </div> -->
+
+            </div>
+        </form>
+
+        <script type="text/javascript">
+
+            var name = "{{user.id}}"
+            document.getElementById("identificador").value
+                = name;
+
+
+        </script>
+
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}

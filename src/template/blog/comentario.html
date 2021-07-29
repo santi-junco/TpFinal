@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!--Estos scripts son para los botones, ni idea como editarlos-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'js/confirmacion.js'%}"></script>
+
+<!-- Page Header -->
+<header class="masthead" style="height: 65px">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto">
+
+                {{post.contenido}}
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<hr style="width: 60%">
+
+<div style="margin-left:15px; margin-bottom: 15px;">
+    <h6>Comentarios </h6>
+</div>
+
+{% include "./cajaComentario.html" %}
+
+{% if comentarios %}
+<br>
+<br>
+
+<div class="accordion" id="accordionExample">
+    {% for comentario in comentarios %}
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button id="" class="btn btn-block text-left " type="button" data-toggle="collapse"
+                    data-target="#collapse{{comentario.id}}" aria-expanded="true"
+                    aria-controls="collapse{{comentario.id}}">
+                    {{comentario.autor}} | <span>{{comentario.fecha_creacion}}</span>
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapse{{comentario.id}}" class="collapse" aria-labelledby="headingOne"
+            data-parent="#accordionExample">
+            <div class="card-body">
+                <div
+                    style="margin-top: 15px; margin-bottom: 15px; font-size:15px; margin-left: 50px;margin-right: 50px">
+                    {{comentario.contenido}}
+                </div>
+
+                <br>
+
+
+            </div>
+
+
+
+            <br>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endfor %}
+</div>
+{% endif %}
+
+</div>
+</div>
+
+{% endblock %}

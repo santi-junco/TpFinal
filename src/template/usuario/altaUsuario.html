@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<header class="masthead" style="background-image: url(/static/img/post-bg.jpg);">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>Registar Usuario</h1>
+                    <span class="subheading">Blog de Noticias y Actualidad </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="jumbotron jumbotron-fluid">
+
+
+<div class="container ">
+    <!-- <p>REGISTRAR USUARIO</p> -->
+    <form method="POST" enctype="multipart/form-data" style="font-size: 15px;">{% csrf_token %}
+        {{ form|crispy}}
+        <div class='container text-center '>
+            <input type="submit" name="" value="REGISTRAR USUARIO"  class="btn btn-outline-info">
+        </div>
+    </form>
+    <div class='container text-center ' style="font-size: 14px;">
+        <br>
+
+        <strong><a href="{% url 'login' %}">¿Ya posee una cuenta? Ingresar</a></strong>
+    </div>
+</div>
+</div>
+
+{% endblock %}

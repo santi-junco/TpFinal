@@ -1,0 +1,35 @@
+.btn:focus{
+    box-shadow: none !important; 
+
+}
+#headingOne{
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: rgba(255, 255, 255, 0.945);
+}
+#id_contenido {
+    height: 94px !important;
+}
+.requiredField {
+    font-size: 15px !important;
+}
+#form_coment .requiredField{
+    display: none !important;
+}
+.post-item {
+    padding-top: 15px;
+}
+.post-container {
+    margin-left: 15px;
+    margin-right: 10px;
+    padding-top: 15px;
+}
+
+.pag > a {
+    font-size: 10px;
+    padding: 7px 20px;
+}
+
+/* .post-subtitle h5{
+  
+} */

@@ -1,0 +1,71 @@
+{% extends './basePosts.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block listado %}
+
+<!-- Main Content -->
+
+<div class="col-md-8 col-md-10 mx-auto post-container" >
+
+  {% for post in object_list %}
+  <div class="post-preview post-item ">
+
+    <h2 class="post-title">
+      <a href="{% url 'posts' post.pk %}">{{post.titulo}}</a>
+
+    </h2>
+    <p class="post-subtitle text-truncate" style="margin-bottom: 0px;">
+      {{post.contenido}}
+    </p>
+    <strong><a href="{% url 'posts' post.pk %}" style="font-size: 15px; ">Ver más</a></strong>
+    </a>
+    <div class="row post-meta">
+      <div class="col-md-8">
+        <p>Postedado por
+          <a href="{% url 'usuarios' post.id_user %}"  on>{{post.id_user}}</a>
+          <br> <span style="font-size: 15px">{{post.fecha_publicacion}}</span>
+        </p>
+      </div>
+
+
+      <!--Solo los usuarios registrados pueden ver el boton de borrar y editar
+            falta implementar la clave foranea del post para "conectarlo" al usuario que lo creo, sin esto, nadie puede editar ni eliminar sus propios posts.
+            Supongo que pasara lo mismo con comentarios, si es que se pueden editar o eliminar-->
+      {% if user.is_authenticated %}
+
+      {% if user.id == post.id_user_id %}
+
+      <div class="col-md-4">
+        <p class="float-right">
+          <a href="{% url 'editar' post.id %}"
+            style="color:black;padding-bottom: 10px;padding-left: 15px;padding-right: 15px;padding-top: 10px;"
+            role="button" class="btn btn-outline-info" type="image/x-icon"> <img src="{% static 'img/pencil.svg' %}"
+              style="width:17px;height:17px" alt='' /></a>
+
+          <a href="#" onclick="confirmarEliminacion({{post.id}})"
+            style="color:black;padding-bottom: 10px;padding-left: 15px;padding-right: 15px;padding-top: 10px;"
+            role="button" class="btn btn-outline-danger" type="image/x-icon"> <img src="{% static 'img/trash.svg' %}"
+              style="width:17px;height:17px" alt='' /></a>
+        </p>
+      </div>
+
+      {% endif %}
+      {% endif %}
+
+    </div>
+    {% if not forloop.last %}
+    <hr>
+
+    {% endif %}
+
+
+
+  </div>
+  {% endfor %}
+
+
+</div>
+
+{% endblock %}

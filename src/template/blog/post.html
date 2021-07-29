@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!--Estos scripts son para los botones, ni idea como editarlos-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'js/confirmacion.js'%}"></script>
+
+<!-- Page Header -->
+{% if post.imagen %}
+<header class="masthead" style="background-image: url({{post.imagen.url}})">
+  {% else %}
+  <header class="masthead">
+    {% endif %}
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{post.titulo}}</h1>
+            <h2 class="subheading">{{post.subtitulo}}</h2>
+            <span class="meta">Posteado por
+              <a href="{% url 'usuarios' post.id_user %}"> {{post.id_user}}</a>
+              <br><span style="font-size: 15px">{{post.fecha_publicacion}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container ">
+      <div class="row">
+        <div class="col-lg-10 col-md-10 mx-auto">
+
+          {{post.contenido}}
+        </div>
+      </div>
+    </div>
+  </article>
+
+
+  <hr style="width: 60%">
+
+  <div style="margin-left:15px; margin-bottom: 15px;">
+    <h6>Comentarios </h6>
+  </div>
+  
+  {% include "./cajaComentario.html" %}
+
+  {% if comentarios %}
+  <br>
+  <br>
+
+  <div class="accordion" id="accordionExample">
+    {% for comentario in comentarios %}
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button id="" class="btn btn-block text-left " type="button" data-toggle="collapse"
+            data-target="#collapse{{comentario.id}}" aria-expanded="true" aria-controls="collapse{{comentario.id}}">
+            {{comentario.autor}} | <span>{{comentario.fecha_creacion}}</span>
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapse{{comentario.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="row card-body">
+          <!-- <div clastyle="margin-top: 15px; margin-bottom: 15px; font-size:15px; margin-left: 50px;margin-right: 50px">
+            {{comentario.contenido}}
+          </div> -->
+          <div class="col-md-10">
+            <p style="padding-left: 25px"> {{comentario.contenido}}</p>
+          </div>
+          <div class="col-md-2">
+
+            {% if user.is_authenticated %}
+
+            {% if user.id == comentario.autor_id %}
+
+            <div class="row ">
+              <div class="col-md-12">
+                <p class="float-right">
+                  <a href="{% url 'edicion' pk=comentario.id post_id=post.id %}"
+                    style="color:black;padding-bottom: 10px;padding-left: 15px;padding-right: 15px;padding-top: 10px;"
+                    role="button" class="btn btn-outline-info" type="image/x-icon"> <img
+                      src="{% static 'img/pencil.svg' %}" style="width:17px;height:17px" alt='' /></a>
+
+                  <a href="#" onclick="eliminarComentario({{comentario.id}}, {{post.id }})"
+                    style="color:black;padding-bottom: 10px;padding-left: 15px;padding-right: 15px;padding-top: 10px;"
+                    role="button" class="btn btn-outline-danger" type="image/x-icon"> <img
+                      src="{% static 'img/trash.svg' %}" style="width:17px;height:17px" alt='' /></a>
+                </p>
+              </div>
+            </div>
+
+
+
+            {% endif %}
+            {% endif %}
+
+          </div>
+        </div>
+
+        <!-- ---------------ACA VA LO DE ELIMINAR COMENTARIO---------------- -->
+
+        <br>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  </div>
+  </div>
+
+  {% endblock %}

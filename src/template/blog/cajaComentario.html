@@ -1,0 +1,54 @@
+{% load crispy_forms_tags %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+
+        <div class="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        {% if user.is_authenticated %}
+                        <button id="" class="btn btn-block text-left" type="button" aria-expanded="true">
+                            Deja un comentario
+                        </button>
+                        {% else%}
+                        <button id="" class="btn btn-block text-left" type="button" aria-expanded="true">
+                        <a href="{% url 'login' %}">Inicia sesión para dejar un comentario</a>
+                        </button>
+                        {% endif %}
+                    </h2>
+                </div>
+
+                {% if user.is_authenticated %}
+
+                <form method="POST">
+                    <div class=" row card-body">
+                        <div class="col-md-10" id="form_coment">
+                            {% csrf_token %}
+
+                            {{form|crispy}}
+
+                        </div>
+                        <div class="col-md-2">
+
+                            <input type="submit" name="guardar" id="" value="Guardar" class="btn btn-outline-info "
+                                style="padding-left: 10px;padding-right: 10px;padding-top: 10px;padding-bottom: 10px;">
+                        </div>
+                    </div>
+                </form>
+
+                <script type="text/javascript">
+
+                    var name = "{{user.id}}"
+                    document.getElementById("identificador").value
+                        = name;
+
+
+                </script>
+
+
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

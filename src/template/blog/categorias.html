@@ -1,0 +1,88 @@
+{% extends './basePosts.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!-- Page Header -->
+{% block titulo %} {{categ}}{% endblock %}
+{% block subtitulo %} Blog de Noticias y Actualidad sobre {{categ}} {% endblock %}
+
+{% block listado %}
+
+<!-- Main Content -->
+{% if existe %}
+{% if page_obj|length > 0 %}
+
+    <div class="col-lg-8 col-md-10 mx-auto post-container">
+
+      {% for post in page_obj %}
+      <div class="post-preview post-item ">
+
+        <h2 class="post-title">
+          <a href="{% url 'posts' post.pk %}">{{post.titulo}}</a>
+
+        </h2>
+        <p class="post-subtitle text-truncate" style="margin-bottom: 0px;">
+          {{post.contenido}}
+        </p>
+        <strong><a href="{% url 'posts' post.pk %}" style="font-size: 15px; ">Ver más</a></strong>
+        </a>
+        <div class="row post-meta">
+          <div class="col-md-8">
+            <p>Postedado por
+              <a href="{% url 'usuarios' post.id_user %}" on>{{post.id_user}}</a>
+              - {{post.fecha_publicacion}}
+
+            </p>
+          </div>
+
+
+          {% if user.is_authenticated %}
+          {% if user.id == post.id_user_id %}
+
+          <div class="col-md-4">
+            <p class="float-right">
+              <a href="{% url 'editar' post.id %}"
+                style="color:black;padding-bottom: 10px;padding-left: 15px;padding-right: 15px;padding-top: 10px;"
+                role="button" class="btn btn-outline-info" type="image/x-icon"> <img src="{% static 'img/pencil.svg' %}"
+                  style="width:17px;height:17px" alt='' /></a>
+
+              <a href="#" onclick="confirmarEliminacion({{post.id}})"
+                style="color:black;padding-bottom: 10px;padding-left: 15px;padding-right: 15px;padding-top: 10px;"
+                role="button" class="btn btn-outline-danger" type="image/x-icon"> <img
+                  src="{% static 'img/trash.svg' %}" style="width:17px;height:17px" alt='' /></a>
+            </p>
+          </div>
+
+          {% endif %}
+          {% endif %}
+
+        </div>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+
+{% endif %}
+
+
+{% if page_obj|length is 0 %}
+
+      <p style="text-align: center"> 
+      <h4>Lo sentimos, esta categoria aun no contiene post ...</h4>
+      </p>
+
+
+{% endif %}
+
+
+{% else %}
+ <p style="text-align: center"> 
+      <h4>Lo sentimos, esta categoria no existe...</h4>
+      </p>
+
+{% endif %}
+
+{% endblock %}
