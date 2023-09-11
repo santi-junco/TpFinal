@@ -131,3 +131,5 @@ entorno
 /src/tpfinal/settings/local.py
 
 *.pem
+
+anotaciones.txt
