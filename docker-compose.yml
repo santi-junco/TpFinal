@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    build:
+      context: ./src
+    command: gunicorn tpfinal.wsgi -w 2 --bind 0.0.0.:8080 --timneout 120
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/:/app/
+      - media:/app/media/
+  
+  db:
+    image: "postgres:latest"
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_pass
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
