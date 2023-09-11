@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 entorno
 /src/tpfinal/settings/local.py
+
+*.pem
